@@ -5,6 +5,7 @@ import 'package:reserva_libros/widgets/user/Crear.dart';
 import 'package:reserva_libros/widgets/user/Editar.dart';
 import 'package:reserva_libros/widgets/user/Inicio.dart';
 import 'package:reserva_libros/widgets/user/Login.dart';
+import 'package:reserva_libros/widgets/user/MisReservas.dart';
 import 'package:reserva_libros/widgets/user/Perfil.dart';
 
 void main() {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/perfil': (context) => const Perfil(),
         '/crearCuenta': (context) => const Crear(),
         '/editarCuenta': (context) => const EditUser(),
+        '/misReservas': (context) => const MisReservas(),
         // ADMIN
         '/loginAdmin': (context) => const AdminLogin(),
         '/dashboard': (context) => const Dashboard()

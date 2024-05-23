@@ -17,7 +17,9 @@ class CustomBottomAppBar extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.library_books),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/misReservas");
+            },
           ),
           IconButton(
             icon: const Icon(Icons.person),
