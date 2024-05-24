@@ -51,7 +51,7 @@ class _EditarLibroState extends State<EditarLibro> {
         "titulo": tituloController.text,
         "descripcion": descripcionController.text,
         "author": autorController.text,
-        "editorial": autorController.text,
+        "editorial": editorialController.text,
         "ano_publicacion": ano_publicacionController.text,
         "disponible": disponible.text,
         "isbn": isbn.text,
