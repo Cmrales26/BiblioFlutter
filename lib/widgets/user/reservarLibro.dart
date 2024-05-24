@@ -237,7 +237,7 @@ class _DetallesLibroState extends State<DetallesLibro> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        backgroundColor: Colors.green.shade300,
+                        backgroundColor: Colors.green.shade500,
                       ),
                       child: const Text(
                         'Reservar Libro',

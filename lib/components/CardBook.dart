@@ -15,7 +15,7 @@ class CardBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: datos.status == 0 ? Colors.grey.shade300 : Colors.white,
+      color: datos.status == 0 ? Colors.grey.shade300 : null,
       child: ListTile(
         title: Opacity(
           opacity: datos.status == 0 ? 0.5 : 1.0,

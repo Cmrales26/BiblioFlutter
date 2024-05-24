@@ -19,7 +19,7 @@ class AdminBar extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Navigator.pushNamed(context, "/addBook");
+              Navigator.pushNamed(context, "/agregarLibro");
             },
           ),
           IconButton(

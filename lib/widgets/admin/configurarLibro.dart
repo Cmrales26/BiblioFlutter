@@ -7,7 +7,7 @@ import 'package:reserva_libros/ruta.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:reserva_libros/widgets/admin/EditarLibro.dart';
 
 class ConfigurarLibro extends StatefulWidget {
   final Libro libro;
@@ -18,40 +18,18 @@ class ConfigurarLibro extends StatefulWidget {
 }
 
 class _ConfigurarLibroState extends State<ConfigurarLibro> {
-  bool isReserved = false;
-
   @override
   void initState() {
     super.initState();
-    checkReserva(context);
   }
 
-  Future checkReserva(context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final res = await http.post(
-      Uri.parse("${Ruta.ruta}/user/CheckReserva.php"),
-      body: {
-        "id": prefs.getString('userId'),
-        "book_id": widget.libro.Id_libro.toString()
-      },
-    );
-    final items = json.decode(res.body);
-    if (items.length > 0) {
-      setState(() {
-        isReserved = items['respuesta'];
-      });
-    }
-  }
+  Future desactivar(context) async {
+    int? book_id = widget.libro.Id_libro;
 
-  Future reservar(context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     final res = await http.post(
-      Uri.parse("${Ruta.ruta}/user/reservarLibro.php"),
-      body: {
-        "id": prefs.getString('userId'),
-        "book_id": widget.libro.Id_libro.toString()
-      },
+      Uri.parse("${Ruta.ruta}/admin/desactivarLibro.php/?id=$book_id"),
     );
+
     final statusCode = res.statusCode;
     final items = json.decode(res.body);
     if (statusCode == 200) {
@@ -60,7 +38,7 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
         builder: (BuildContext context) {
           return SuccessAlert(
             title: items['respuesta'],
-            redirectRoute: '/home',
+            redirectRoute: '/dashboard',
           );
         },
       );
@@ -70,49 +48,42 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
         builder: (BuildContext context) {
           return SuccessAlert(
             title: items['respuesta'],
-            redirectRoute: '/home',
+            redirectRoute: '/dashboard',
           );
         },
       );
     }
   }
 
-  Future devolver(context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userIdString = prefs.getString("userId");
-    if (userIdString != null) {
-      int id = int.parse(userIdString);
+  Future activar(context) async {
+    int? book_id = widget.libro.Id_libro;
 
-      int? book_id = widget.libro.Id_libro;
+    final res = await http.post(
+      Uri.parse("${Ruta.ruta}/admin/activarlibro.php/?id=$book_id"),
+    );
 
-      final res = await http.delete(
-        Uri.parse(
-            "${Ruta.ruta}/user/DevolverLibro.php/?id=$id&lib_id=$book_id"),
+    final statusCode = res.statusCode;
+    final items = json.decode(res.body);
+    if (statusCode == 200) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SuccessAlert(
+            title: items['respuesta'],
+            redirectRoute: '/dashboard',
+          );
+        },
       );
-
-      final statusCode = res.statusCode;
-      final items = json.decode(res.body);
-      if (statusCode == 200) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return SuccessAlert(
-              title: items['respuesta'],
-              redirectRoute: '/home',
-            );
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return SuccessAlert(
-              title: items['respuesta'],
-              redirectRoute: '/home',
-            );
-          },
-        );
-      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SuccessAlert(
+            title: items['respuesta'],
+            redirectRoute: '/dashboard',
+          );
+        },
+      );
     }
   }
 
@@ -206,46 +177,63 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
               ),
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.all(20),
-          //   child: isReserved
-          //       ? SizedBox(
-          //           width: MediaQuery.of(context).size.width,
-          //           child: ElevatedButton(
-          //             onPressed: () {
-          //               devolver(context);
-          //             },
-          //             style: ElevatedButton.styleFrom(
-          //               shape: RoundedRectangleBorder(
-          //                 borderRadius: BorderRadius.circular(5.0),
-          //               ),
-          //               backgroundColor: Colors.red.shade200,
-          //             ),
-          //             child: const Text(
-          //               'Devolver Libro',
-          //               style: TextStyle(color: Colors.white),
-          //             ),
-          //           ),
-          //         )
-          //       : SizedBox(
-          //           width: MediaQuery.of(context).size.width,
-          //           child: ElevatedButton(
-          //             onPressed: () {
-          //               reservar(context);
-          //             },
-          //             style: ElevatedButton.styleFrom(
-          //               shape: RoundedRectangleBorder(
-          //                 borderRadius: BorderRadius.circular(5.0),
-          //               ),
-          //               backgroundColor: Colors.blue.shade300,
-          //             ),
-          //             child: const Text(
-          //               'Reservar Libro',
-          //               style: TextStyle(color: Colors.white),
-          //             ),
-          //           ),
-          //         ),
-          // )
+          Container(
+            margin: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (widget.libro.status == 0) {
+                        activar(context);
+                      } else {
+                        desactivar(context);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      backgroundColor: widget.libro.status == 0
+                          ? Colors.blue.shade500
+                          : Colors.red.shade500,
+                    ),
+                    child: Text(
+                      widget.libro.status == 0
+                          ? 'Reactivar Libro'
+                          : 'Desactivar Libro',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EditarLibro(libro: widget.libro),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      backgroundColor: Colors.green.shade500,
+                    ),
+                    child: const Text(
+                      'Editar Libro',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

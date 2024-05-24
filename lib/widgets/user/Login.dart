@@ -98,11 +98,26 @@ class _UserLoginState extends State<UserLogin> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Text(
-              'BibliotecApp',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+            RichText(
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Bibliotec',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'App',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
               ),
             ),
             const Text(

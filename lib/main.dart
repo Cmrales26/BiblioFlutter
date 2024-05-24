@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reserva_libros/widgets/admin/AgregarLibro.dart';
 import 'package:reserva_libros/widgets/admin/Dashboard.dart';
 import 'package:reserva_libros/widgets/admin/LoginAdmin.dart';
 import 'package:reserva_libros/widgets/user/Crear.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         '/misReservas': (context) => const MisReservas(),
         // ADMIN
         '/loginAdmin': (context) => const AdminLogin(),
-        '/dashboard': (context) => const Dashboard()
+        '/dashboard': (context) => const Dashboard(),
+        '/agregarLibro': (context) => const AgregarLibro(),
       },
     );
   }
