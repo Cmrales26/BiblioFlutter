@@ -167,7 +167,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  backgroundColor: Colors.blue.shade300,
+                  backgroundColor: Colors.red.shade300,
                 ),
                 child: const Text(
                   'Iniciar Sesión',
@@ -185,7 +185,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 child: const Text(
                   "Iniciar Como Usuario",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

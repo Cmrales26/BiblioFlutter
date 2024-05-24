@@ -9,15 +9,15 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DetallesLibro extends StatefulWidget {
+class ConfigurarLibro extends StatefulWidget {
   final Libro libro;
-  const DetallesLibro({super.key, required this.libro});
+  const ConfigurarLibro({super.key, required this.libro});
 
   @override
-  State<DetallesLibro> createState() => _DetallesLibroState();
+  State<ConfigurarLibro> createState() => _ConfigurarLibroState();
 }
 
-class _DetallesLibroState extends State<DetallesLibro> {
+class _ConfigurarLibroState extends State<ConfigurarLibro> {
   bool isReserved = false;
 
   @override
@@ -206,46 +206,46 @@ class _DetallesLibroState extends State<DetallesLibro> {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: isReserved
-                ? SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        devolver(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        backgroundColor: Colors.red.shade200,
-                      ),
-                      child: const Text(
-                        'Devolver Libro',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  )
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        reservar(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        backgroundColor: Colors.green.shade300,
-                      ),
-                      child: const Text(
-                        'Reservar Libro',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-          )
+          // Container(
+          //   margin: const EdgeInsets.all(20),
+          //   child: isReserved
+          //       ? SizedBox(
+          //           width: MediaQuery.of(context).size.width,
+          //           child: ElevatedButton(
+          //             onPressed: () {
+          //               devolver(context);
+          //             },
+          //             style: ElevatedButton.styleFrom(
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(5.0),
+          //               ),
+          //               backgroundColor: Colors.red.shade200,
+          //             ),
+          //             child: const Text(
+          //               'Devolver Libro',
+          //               style: TextStyle(color: Colors.white),
+          //             ),
+          //           ),
+          //         )
+          //       : SizedBox(
+          //           width: MediaQuery.of(context).size.width,
+          //           child: ElevatedButton(
+          //             onPressed: () {
+          //               reservar(context);
+          //             },
+          //             style: ElevatedButton.styleFrom(
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(5.0),
+          //               ),
+          //               backgroundColor: Colors.blue.shade300,
+          //             ),
+          //             child: const Text(
+          //               'Reservar Libro',
+          //               style: TextStyle(color: Colors.white),
+          //             ),
+          //           ),
+          //         ),
+          // )
         ],
       ),
     );

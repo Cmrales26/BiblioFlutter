@@ -12,7 +12,8 @@ class CustomBottomAppBar extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.home),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, "/home");
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/home', (route) => false);
             },
           ),
           IconButton(

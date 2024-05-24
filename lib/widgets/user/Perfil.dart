@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:reserva_libros/components/AppAdminBar.dart';
 import 'package:reserva_libros/components/AppBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,6 +58,13 @@ class _PerfilState extends State<Perfil> {
 
   @override
   Widget build(BuildContext context) {
+    Widget? bottomNavBar;
+
+    if (rol == "usuario") {
+      bottomNavBar = const CustomBottomAppBar();
+    } else if (rol == "admin") {
+      bottomNavBar = const AdminBar();
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Perfil"),
@@ -67,7 +75,7 @@ class _PerfilState extends State<Perfil> {
           children: [
             CircleAvatar(
               radius: 50.0,
-              backgroundColor: Colors.lightBlue,
+              backgroundColor: Colors.red,
               child: Text(
                 nombre[0] + apellido[0],
                 style: const TextStyle(fontSize: 40),
@@ -122,7 +130,7 @@ class _PerfilState extends State<Perfil> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.person, color: Colors.blue),
+                    Icon(Icons.person, color: Colors.red),
                     SizedBox(width: 10.0),
                     Text(
                       "Género:",
@@ -144,7 +152,7 @@ class _PerfilState extends State<Perfil> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.email, color: Colors.blue),
+                    Icon(Icons.email, color: Colors.red),
                     SizedBox(width: 10.0),
                     Text(
                       "Correo:",
@@ -166,7 +174,7 @@ class _PerfilState extends State<Perfil> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.phone, color: Colors.blue),
+                    Icon(Icons.phone, color: Colors.red),
                     SizedBox(width: 10.0),
                     Text(
                       "Teléfono:",
@@ -188,7 +196,7 @@ class _PerfilState extends State<Perfil> {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.work, color: Colors.blue),
+                    Icon(Icons.work, color: Colors.red),
                     SizedBox(width: 10.0),
                     Text(
                       "Rol:",
@@ -234,7 +242,7 @@ class _PerfilState extends State<Perfil> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomAppBar(),
+      bottomNavigationBar: bottomNavBar,
     );
   }
 }

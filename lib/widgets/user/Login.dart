@@ -169,7 +169,7 @@ class _UserLoginState extends State<UserLogin> {
                 child: const Text(
                   "Crear cuenta",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -188,7 +188,7 @@ class _UserLoginState extends State<UserLogin> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  backgroundColor: Colors.blue.shade300,
+                  backgroundColor: Colors.red.shade300,
                 ),
                 child: const Text(
                   'Iniciar Sesión',
@@ -208,7 +208,7 @@ class _UserLoginState extends State<UserLogin> {
                 child: const Text(
                   "Iniciar Como Administrador",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

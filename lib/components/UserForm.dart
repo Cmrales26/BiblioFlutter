@@ -149,7 +149,7 @@ class UserForm extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              backgroundColor: Colors.blue.shade300,
+              backgroundColor: Colors.red.shade300,
             ),
             child: Text(
               isEditing ? "Editar Cuenta" : 'Crear Cuenta',

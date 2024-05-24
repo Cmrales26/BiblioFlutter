@@ -102,7 +102,10 @@ class MisReservasState extends State<MisReservas> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       var datos = snapshot.data![index];
-                      return CardBook(datos: datos);
+                      return CardBook(
+                        datos: datos,
+                        isAdmin: false,
+                      );
                     },
                   );
                 },
