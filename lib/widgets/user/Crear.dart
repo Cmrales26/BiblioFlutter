@@ -24,6 +24,9 @@ class _CrearState extends State<Crear> {
   String error = '';
   bool isError = false;
 
+  bool isButtonDisabled = false;
+  String buttonText = 'Crear Cuenta';
+
   void GeneroCambio(String value) {
     setState(() {
       genero = value;
@@ -31,6 +34,11 @@ class _CrearState extends State<Crear> {
   }
 
   Future regUsuario(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Creando...';
+    });
+
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/user/creatcuenta.php"),
       body: {
@@ -60,6 +68,8 @@ class _CrearState extends State<Crear> {
       setState(() {
         error = items['respuesta'];
         isError = true;
+        isButtonDisabled = false;
+        buttonText = 'Crear cuenta';
       });
     }
   }
@@ -115,6 +125,8 @@ class _CrearState extends State<Crear> {
                   onSubmit: regUsuario,
                   isEditing: false,
                   cambioGenero: GeneroCambio,
+                  buttonText: buttonText,
+                  buttonClick: isButtonDisabled,
                 )
               ],
             ),

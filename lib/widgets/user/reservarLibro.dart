@@ -20,6 +20,9 @@ class DetallesLibro extends StatefulWidget {
 class _DetallesLibroState extends State<DetallesLibro> {
   bool isReserved = false;
 
+  bool isButtonDisabled = false;
+  String buttonText = 'Reservar Libro';
+
   @override
   void initState() {
     super.initState();
@@ -39,11 +42,21 @@ class _DetallesLibroState extends State<DetallesLibro> {
     if (items.length > 0) {
       setState(() {
         isReserved = items['respuesta'];
+        if (isReserved) {
+          buttonText = "Devolver Libro";
+        } else {
+          buttonText = "Reservar Libro";
+        }
       });
     }
   }
 
   Future reservar(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Reservando...';
+    });
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/user/reservarLibro.php"),
@@ -78,6 +91,10 @@ class _DetallesLibroState extends State<DetallesLibro> {
   }
 
   Future devolver(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Devolviendo...';
+    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userIdString = prefs.getString("userId");
     if (userIdString != null) {
@@ -212,36 +229,34 @@ class _DetallesLibroState extends State<DetallesLibro> {
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {
-                        devolver(context);
-                      },
+                      onPressed:
+                          isButtonDisabled ? null : () => devolver(context),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         backgroundColor: Colors.red.shade200,
                       ),
-                      child: const Text(
-                        'Devolver Libro',
-                        style: TextStyle(color: Colors.white),
+                      child: Text(
+                        buttonText,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   )
                 : SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () {
-                        reservar(context);
-                      },
+                      onPressed:
+                          isButtonDisabled ? null : () => reservar(context),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         backgroundColor: Colors.green.shade500,
                       ),
-                      child: const Text(
-                        'Reservar Libro',
-                        style: TextStyle(color: Colors.white),
+                      child: Text(
+                        buttonText,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

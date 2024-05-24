@@ -12,6 +12,8 @@ class BookForm extends StatelessWidget {
   final TextEditingController disponible;
   final TextEditingController isbn;
   final bool isEditing;
+  final String buttonText;
+  final bool buttonClick;
   final Function(BuildContext) onSubmit;
 
   const BookForm({
@@ -26,6 +28,8 @@ class BookForm extends StatelessWidget {
     required this.disponible,
     required this.isbn,
     required this.isEditing,
+    required this.buttonText,
+    required this.buttonClick,
   });
 
   @override
@@ -135,9 +139,7 @@ class BookForm extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
-            onPressed: () {
-              onSubmit(context);
-            },
+            onPressed: buttonClick ? null : () => onSubmit(context),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
@@ -145,8 +147,8 @@ class BookForm extends StatelessWidget {
               backgroundColor: Colors.red.shade300,
             ),
             child: Text(
-              isEditing ? "Editar Libro" : 'Crear Libro',
-              style: TextStyle(color: Colors.white),
+              buttonText,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),

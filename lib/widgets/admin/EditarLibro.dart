@@ -30,6 +30,9 @@ class _EditarLibroState extends State<EditarLibro> {
   String error = '';
   bool isError = false;
 
+  bool isButtonDisabled = false;
+  String buttonText = 'Editar libro';
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,10 @@ class _EditarLibroState extends State<EditarLibro> {
   }
 
   Future editLibro(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Editando Libro...';
+    });
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/admin/EditarLibro.php"),
       body: {
@@ -67,6 +74,8 @@ class _EditarLibroState extends State<EditarLibro> {
       setState(() {
         error = items['respuesta'];
         isError = true;
+        isButtonDisabled = false;
+        buttonText = 'Editar libro';
       });
     }
   }
@@ -137,6 +146,8 @@ class _EditarLibroState extends State<EditarLibro> {
                 disponible: disponible,
                 isbn: isbn,
                 isEditing: true,
+                buttonText: buttonText,
+                buttonClick: isButtonDisabled,
               )
             ],
           ),

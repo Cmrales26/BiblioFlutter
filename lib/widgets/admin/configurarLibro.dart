@@ -21,10 +21,23 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
   @override
   void initState() {
     super.initState();
+    if (widget.libro.status == 0) {
+      setState(() {
+        buttonText = "Activar libro";
+      });
+    }
   }
+
+  bool isButtonDisabled = false;
+  String buttonText = 'Desactivar libro';
 
   Future desactivar(context) async {
     int? book_id = widget.libro.Id_libro;
+
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Desactivando...';
+    });
 
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/admin/desactivarLibro.php/?id=$book_id"),
@@ -57,6 +70,11 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
 
   Future activar(context) async {
     int? book_id = widget.libro.Id_libro;
+
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Activando...';
+    });
 
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/admin/activarlibro.php/?id=$book_id"),
@@ -184,13 +202,11 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (widget.libro.status == 0) {
-                        activar(context);
-                      } else {
-                        desactivar(context);
-                      }
-                    },
+                    onPressed: isButtonDisabled
+                        ? null
+                        : widget.libro.status == 0
+                            ? () => activar(context)
+                            : () => desactivar(context),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -200,9 +216,7 @@ class _ConfigurarLibroState extends State<ConfigurarLibro> {
                           : Colors.red.shade500,
                     ),
                     child: Text(
-                      widget.libro.status == 0
-                          ? 'Reactivar Libro'
-                          : 'Desactivar Libro',
+                      buttonText,
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),

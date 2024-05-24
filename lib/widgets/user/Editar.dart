@@ -31,6 +31,9 @@ class _EditUserState extends State<EditUser> {
   String error = '';
   bool isError = false;
 
+  bool isButtonDisabled = false;
+  String buttonText = 'Editar Cuenta';
+
   void generoCambio(String value) {
     setState(() {
       genero = value;
@@ -38,6 +41,10 @@ class _EditUserState extends State<EditUser> {
   }
 
   Future editUsuario(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Editando...';
+    });
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/user/EditarUsuario.php"),
       body: {
@@ -78,6 +85,8 @@ class _EditUserState extends State<EditUser> {
       setState(() {
         error = items['respuesta'];
         isError = true;
+        isButtonDisabled = false;
+        buttonText = 'Editar Cuenta';
       });
     }
   }
@@ -161,6 +170,8 @@ class _EditUserState extends State<EditUser> {
                   onSubmit: editUsuario,
                   isEditing: true,
                   cambioGenero: generoCambio,
+                  buttonText: buttonText,
+                  buttonClick: isButtonDisabled,
                 )
               ],
             ),

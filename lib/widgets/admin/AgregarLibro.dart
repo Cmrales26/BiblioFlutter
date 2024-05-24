@@ -27,7 +27,15 @@ class _AgregarLibroState extends State<AgregarLibro> {
   String error = '';
   bool isError = false;
 
+  bool isButtonDisabled = false;
+  String buttonText = 'Crear libro';
+
   Future regLibro(context) async {
+    setState(() {
+      isButtonDisabled = true;
+      buttonText = 'Creando libro...';
+    });
+
     final res = await http.post(
       Uri.parse("${Ruta.ruta}/admin/crearLibro.php"),
       body: {
@@ -58,6 +66,8 @@ class _AgregarLibroState extends State<AgregarLibro> {
       setState(() {
         error = items['respuesta'];
         isError = true;
+        isButtonDisabled = false;
+        buttonText = 'Crear libro';
       });
     }
   }
@@ -115,6 +125,8 @@ class _AgregarLibroState extends State<AgregarLibro> {
                 disponible: disponible,
                 isbn: isbn,
                 isEditing: false,
+                buttonText: buttonText,
+                buttonClick: isButtonDisabled,
               )
             ],
           ),

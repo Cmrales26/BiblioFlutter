@@ -8,7 +8,9 @@ class UserForm extends StatelessWidget {
   final TextEditingController telefonoController;
   final TextEditingController passController;
   final String genero;
+  final String buttonText;
   final bool isEditing;
+  final bool buttonClick;
   final Function(BuildContext) onSubmit;
   final Function(String) cambioGenero;
 
@@ -24,6 +26,8 @@ class UserForm extends StatelessWidget {
     required this.onSubmit,
     required this.isEditing,
     required this.cambioGenero,
+    required this.buttonText,
+    required this.buttonClick,
   });
 
   @override
@@ -142,9 +146,7 @@ class UserForm extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
-            onPressed: () {
-              onSubmit(context);
-            },
+            onPressed: buttonClick ? null : () => onSubmit(context),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
@@ -152,7 +154,7 @@ class UserForm extends StatelessWidget {
               backgroundColor: Colors.red.shade300,
             ),
             child: Text(
-              isEditing ? "Editar Cuenta" : 'Crear Cuenta',
+              buttonText,
               style: TextStyle(color: Colors.white),
             ),
           ),
