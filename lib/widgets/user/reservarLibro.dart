@@ -20,6 +20,12 @@ class DetallesLibro extends StatefulWidget {
 class _DetallesLibroState extends State<DetallesLibro> {
   bool isReserved = false;
 
+  @override
+  void initState() {
+    super.initState();
+    checkReserva(context);
+  }
+
   Future checkReserva(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final res = await http.post(
@@ -107,12 +113,6 @@ class _DetallesLibroState extends State<DetallesLibro> {
         );
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    checkReserva(context);
   }
 
   @override

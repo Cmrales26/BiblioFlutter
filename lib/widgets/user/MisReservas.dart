@@ -82,8 +82,14 @@ class MisReservasState extends State<MisReservas> {
                 future: libros,
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Libro>> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Text("Cargando");
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text("No hay libros reservados"),
+                    );
                   }
 
                   return GridView.builder(
